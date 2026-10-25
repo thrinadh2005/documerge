@@ -209,6 +209,8 @@
               <span>Designed &amp; Developed by <strong class="identity-name">Adabala Venkata Thrinadh</strong></span>
               <span class="credit-dot">&bull;</span>
               <span>DocuMerge Studio &bull; 100% Offline PWA &bull; Air-Gapped Privacy</span>
+              <span class="credit-dot">&bull;</span>
+              <button id="btnOpenPrivacyMergeBar" class="footer-link-btn" type="button">Privacy &amp; Compliance</button>
             </div>
           </div>
 
@@ -284,10 +286,45 @@
         </div>
       </div>
 
+      <!-- Legal & Privacy Policy Modal (DPDPA 2023 & Offline Air-Gap Guarantee) -->
+      <div id="legalModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+        <div class="modal-card modal-card-lg" style="text-align: left; max-height: 85vh; overflow-y: auto;">
+          <h3 id="legalTitle" class="modal-heading" style="text-align: center; margin-bottom: 4px;">Privacy &amp; Compliance Guarantee</h3>
+          <p class="modal-subtext" style="text-align: center; margin-bottom: 20px;">Built by Adabala Venkata Thrinadh &bull; 100% Offline Client-Side Architecture</p>
+
+          <div class="legal-content" style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 4px;">1. Zero Data Collection &amp; Air-Gapped Privacy</h4>
+              <p>DocuMerge Studio does not operate any backend server, remote database, or cloud ingestion pipeline. All documents (PDF, DOCX, PPTX, Images) are parsed, merged, and rendered entirely inside your device's browser memory (RAM).</p>
+            </div>
+            <div>
+              <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 4px;">2. India DPDPA 2023 &amp; Global Compliance</h4>
+              <p>In adherence to the Digital Personal Data Protection Act (DPDPA) 2023 and global data protection standards, this application enforces absolute Data Minimization. Because zero personal data is gathered, transmitted, or retained, your private records remain exclusively in your possession.</p>
+            </div>
+            <div>
+              <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 4px;">3. No Cookies &amp; No Telemetry Tracking</h4>
+              <p>We do not use advertising trackers, persistent tracking cookies, or external analytics scripts. The application cache operates solely via standard Service Workers for offline reliability.</p>
+            </div>
+            <div>
+              <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 4px;">4. Intellectual Property &amp; Open Standards</h4>
+              <p>You retain 100% ownership and copyright of all documents and output merged files. DocuMerge Studio is designed and developed by Adabala Venkata Thrinadh.</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; text-align: center;">
+            <button id="btnCloseLegalBottom" class="btn btn-primary btn-md">I Understand &bull; Return to App</button>
+          </div>
+
+          <button id="btnCloseLegal" class="modal-close-btn" aria-label="Close dialog">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
       <!-- Quick Toast Container -->
       <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-      <!-- App Footer with Identity Mark -->
+      <!-- App Footer with Identity Mark (Fixed to Bottom of the Page) -->
       <footer class="app-footer">
         <div class="container footer-inner">
           <div class="footer-identity">
@@ -296,6 +333,8 @@
           </div>
           <div class="footer-meta">
             <span>DocuMerge Studio &bull; 100% Offline PWA &bull; Air-Gapped Privacy</span>
+            <span class="credit-dot">&bull;</span>
+            <button id="btnOpenPrivacy" class="footer-link-btn" type="button">Privacy &amp; Compliance</button>
           </div>
         </div>
       </footer>

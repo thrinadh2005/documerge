@@ -62,6 +62,13 @@ const els = {
   btnPreviewResult: document.getElementById('btnPreviewResult'),
   btnShareResult: document.getElementById('btnShareResult'),
   btnCloseResult: document.getElementById('btnCloseResult'),
+
+  // Legal & Privacy Modal
+  legalModal: document.getElementById('legalModal'),
+  btnCloseLegal: document.getElementById('btnCloseLegal'),
+  btnCloseLegalBottom: document.getElementById('btnCloseLegalBottom'),
+  btnOpenPrivacy: document.getElementById('btnOpenPrivacy'),
+  btnOpenPrivacyMergeBar: document.getElementById('btnOpenPrivacyMergeBar'),
   
   // Toast
   toastContainer: document.getElementById('toastContainer')
@@ -850,13 +857,27 @@ function initEvents() {
     if (e.target === els.resultModal) hideResultModal();
   });
 
+  // Legal & Privacy modal
+  const openLegalModal = () => els.legalModal.classList.remove('hidden');
+  const closeLegalModal = () => els.legalModal.classList.add('hidden');
+  els.btnOpenPrivacy?.addEventListener('click', openLegalModal);
+  els.btnOpenPrivacyMergeBar?.addEventListener('click', openLegalModal);
+  els.btnCloseLegal?.addEventListener('click', closeLegalModal);
+  els.btnCloseLegalBottom?.addEventListener('click', closeLegalModal);
+  els.legalModal?.addEventListener('click', (e) => {
+    if (e.target === els.legalModal) closeLegalModal();
+  });
+
   // Prevent background scroll when modal open
   const observer = new MutationObserver(() => {
-    const isModalOpen = !els.progressModal.classList.contains('hidden') || !els.resultModal.classList.contains('hidden');
+    const isModalOpen = !els.progressModal.classList.contains('hidden') || 
+                        !els.resultModal.classList.contains('hidden') ||
+                        !els.legalModal.classList.contains('hidden');
     document.body.style.overflow = isModalOpen ? 'hidden' : '';
   });
   observer.observe(els.progressModal, { attributes: true, attributeFilter: ['class'] });
   observer.observe(els.resultModal, { attributes: true, attributeFilter: ['class'] });
+  observer.observe(els.legalModal, { attributes: true, attributeFilter: ['class'] });
 }
 
 /* ==========================================================================

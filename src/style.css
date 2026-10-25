@@ -1643,3 +1643,19 @@ body.has-documents .app-footer {
   color: var(--text-dim);
 }
 
+.footer-link-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-accent-gold);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.footer-link-btn:hover {
+  opacity: 0.8;
+}
+
