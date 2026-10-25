@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#31372B" />
+      <stop offset="100%" stop-color="#1E231B" />
+    </linearGradient>
+    <linearGradient id="docGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF7EE" />
+      <stop offset="100%" stop-color="#EDE7D5" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded app icon -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  
+  <!-- Subtle inner border ring -->
+  <rect x="12" y="12" width="488" height="488" rx="100" fill="none" stroke="#FAF7EE" stroke-opacity="0.12" stroke-width="3" />
+
+  <!-- Back Document -->
+  <g transform="translate(136, 108) rotate(-9 120 160)" filter="url(#shadow)">
+    <rect width="210" height="280" rx="20" fill="#FAF7EE" fill-opacity="0.45" />
+    <path d="M 140 0 L 210 70 L 140 70 Z" fill="#31372B" fill-opacity="0.25" />
+  </g>
+
+  <!-- Front Document -->
+  <g transform="translate(166, 126)" filter="url(#shadow)">
+    <rect width="210" height="280" rx="20" fill="url(#docGrad)" />
+    <!-- Folded corner -->
+    <path d="M 140 0 L 210 70 L 156 70 A 16 16 0 0 1 140 54 Z" fill="#31372B" />
+    <path d="M 140 0 L 210 70 L 210 0 Z" fill="#1E231B" />
+    
+    <!-- Merge Plus / Connection Symbol -->
+    <circle cx="105" cy="145" r="42" fill="#31372B" />
+    <!-- Plus symbol in floral white -->
+    <rect x="99" y="123" width="12" height="44" rx="6" fill="#FAF7EE" />
+    <rect x="83" y="139" width="44" height="12" rx="6" fill="#FAF7EE" />
+
+    <!-- Document lines -->
+    <rect x="42" y="210" width="126" height="8" rx="4" fill="#31372B" fill-opacity="0.3" />
+    <rect x="42" y="230" width="88" height="8" rx="4" fill="#31372B" fill-opacity="0.2" />
+  </g>
+
+  <!-- PWA Offline Bolt/Leaf Badge -->
+  <circle cx="390" cy="130" r="34" fill="#FAF7EE" filter="url(#shadow)" />
+  <path d="M 390 108 L 376 132 L 388 132 L 386 152 L 404 126 L 392 126 Z" fill="#31372B" />
+</svg>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>DocuMerge — 100% Offline Document Merger PWA</title>
+    <meta name="description" content="Merge, organize, rotate and combine PDF documents and images completely offline in your browser. Private, ultra-fast, mobile and desktop ready." />
+    
+    <!-- PWA & Mobile Meta -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#31372B" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DocuMerge" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Syne / DM Serif Display for Editorial Elegance + Outfit for UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app" class="app-root">
+      
+      <!-- Top Navigation Header -->
+      <header class="app-header">
+        <div class="header-inner container">
+          <div class="brand">
+            <div class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 36 36" width="34" height="34" fill="none">
+                <rect width="36" height="36" rx="9" fill="#FAF7EE" />
+                <path d="M10 9h11l6 6v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2z" fill="#31372B" />
+                <path d="M21 9v6h6" stroke="#FAF7EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <!-- Plus mark -->
+                <path d="M18 17v8M14 21h8" stroke="#FAF7EE" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="brand-text">
+              <span class="brand-title">Docu<span class="brand-accent">Merge</span></span>
+              <span class="brand-badge">OFFLINE PWA</span>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <!-- Offline & Security Indicator Pill -->
+            <div class="status-pill" id="offlineStatusPill" title="100% Private: Files never leave this device">
+              <span class="status-dot"></span>
+              <span class="status-label">100% Offline & Private</span>
+            </div>
+
+            <!-- Theme Switcher Button -->
+            <button id="btnThemeToggle" class="btn btn-secondary btn-sm" title="Toggle Floral White / Black Olive Theme" aria-label="Toggle Theme">
+              <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              <span id="themeLabel">Light Mode</span>
+            </button>
+
+            <!-- PWA Install Button -->
+            <button id="btnInstallPwa" class="btn btn-primary btn-sm install-btn hidden" title="Install as desktop or phone application">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Install App</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main App Container -->
+      <main class="main-content container">
+
+        <!-- Editorial Hero Banner -->
+        <section class="hero-section">
+          <h1 class="hero-title">Seamless Document Merger</h1>
+          <p class="hero-subtitle">
+            Combine multiple PDFs, Word documents (.docx), PowerPoint presentations (.pptx) & images with page-level control. Fast, intuitive, and operates 100% locally on your phone and desktop.
+          </p>
+        </section>
+
+        <!-- Dropzone / File Picker Card -->
+        <section class="upload-section">
+          <div id="dropzone" class="dropzone-card" tabindex="0" role="button" aria-label="Drop files or click to upload">
+            <input type="file" id="fileInput" multiple accept=".pdf,.docx,.pptx,.ppt,image/png,image/jpeg,image/webp,image/gif" class="sr-only" />
+            
+            <div class="dropzone-content">
+              <div class="upload-icon-wrapper">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <h2 class="dropzone-heading">Drop PDFs, Word, PPT or Images here</h2>
+              <p class="dropzone-hint">Tap or click to browse files from your device</p>
+              
+              <div class="format-badges">
+                <span class="badge">.PDF</span>
+                <span class="badge">.DOCX</span>
+                <span class="badge">.PPTX</span>
+                <span class="badge">.JPG</span>
+                <span class="badge">.PNG</span>
+                <span class="badge">.WEBP</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Document Management Workspace (Shown when documents exist) -->
+        <section id="workspaceSection" class="workspace-section hidden">
+          
+          <!-- Workspace Control Bar -->
+          <div class="workspace-header">
+            <div class="workspace-tabs" role="tablist">
+              <button id="tabDocView" class="tab-btn active" role="tab" aria-selected="true" aria-controls="docListView">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <span>Document View</span>
+                <span id="docCountBadge" class="count-pill">0</span>
+              </button>
+              <button id="tabPageView" class="tab-btn" role="tab" aria-selected="false" aria-controls="pageGridView">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span>Visual Page Grid</span>
+                <span id="pageCountBadge" class="count-pill">0</span>
+              </button>
+            </div>
+
+            <!-- Quick Workspace Actions -->
+            <div class="workspace-tools">
+              <button id="btnAddMore" class="btn btn-secondary btn-sm" title="Add additional documents">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add More</span>
+              </button>
+              <button id="btnRotateAll" class="btn btn-secondary btn-sm" title="Rotate all pages 90° clockwise">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span>Rotate All</span>
+              </button>
+              <button id="btnClearAll" class="btn btn-ghost btn-sm text-danger" title="Clear all documents">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Clear</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content 1: Document Level List -->
+          <div id="docListView" class="tab-panel active" role="tabpanel">
+            <div class="doc-list-instructions">
+              <span class="tip-badge">TIP</span>
+              <span>Drag cards or use <strong>↑ ↓</strong> arrows to reorder. Specify page ranges (e.g. <code>1-3, 5</code>) to extract specific pages.</span>
+            </div>
+            
+            <div id="documentList" class="document-list">
+              <!-- Dynamically populated document cards -->
+            </div>
+          </div>
+
+          <!-- Tab Content 2: Visual Page Grid -->
+          <div id="pageGridView" class="tab-panel" role="tabpanel">
+            <div class="grid-controls-bar">
+              <div class="grid-hint">
+                <span class="tip-badge">PAGE GRID</span>
+                <span>Drag pages to arrange custom sequence. Tap <strong>↺</strong> to rotate individual pages or <strong>×</strong> to delete.</span>
+              </div>
+              <div class="grid-zoom-controls">
+                <span class="zoom-label">Card Size:</span>
+                <button class="zoom-btn active" data-size="sm">S</button>
+                <button class="zoom-btn" data-size="md">M</button>
+                <button class="zoom-btn" data-size="lg">L</button>
+              </div>
+            </div>
+
+            <div id="pagesGrid" class="pages-grid size-sm">
+              <!-- Dynamically populated page thumbnail cards -->
+            </div>
+          </div>
+
+          <!-- Bottom Merge Action Bar (Responsive / Fixed on Mobile) -->
+          <div class="merge-action-bar">
+            <div class="merge-bar-inner">
+              <div class="merge-options">
+                <div class="filename-input-group">
+                  <label for="outputFilename" class="filename-label">Save As:</label>
+                  <input type="text" id="outputFilename" class="filename-input" value="Merged_Document.pdf" placeholder="Merged_Document.pdf" />
+                </div>
+
+                <!-- Additional Pro Features: Page Numbers & Watermark -->
+                <div class="pro-features-group">
+                  <label class="toggle-option-label" title="Stamp 'Page X of Y' on bottom of each page">
+                    <input type="checkbox" id="chkPageNumbers" class="custom-checkbox" />
+                    <span>Page Numbers</span>
+                  </label>
+                  <div class="watermark-input-wrap">
+                    <input type="text" id="inputWatermark" class="watermark-input" placeholder="Watermark (optional)" title="Optional diagonal watermark text" />
+                  </div>
+                </div>
+
+                <div class="merge-stat-pill">
+                  <span id="mergeSummaryText">Ready to merge</span>
+                </div>
+              </div>
+
+              <div class="merge-btn-group">
+                <button id="btnMerge" class="btn btn-primary btn-lg merge-cta-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                  <span>Merge &amp; Download PDF</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Creator Identity Mark inside Fixed Bottom Merge Bar -->
+            <div class="merge-bar-footer-credit">
+              <span class="identity-badge">CREATOR</span>
+              <span>Designed &amp; Developed by <strong class="identity-name">Adabala Venkata Thrinadh</strong></span>
+              <span class="credit-dot">&bull;</span>
+              <span>DocuMerge Studio &bull; 100% Offline PWA &bull; Air-Gapped Privacy</span>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- Processing Progress Modal -->
+      <div id="progressModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="progressTitle">
+        <div class="modal-card">
+          <div class="progress-spinner-wrapper">
+            <div class="spinner"></div>
+          </div>
+          <h3 id="progressTitle" class="modal-heading">Processing Documents...</h3>
+          <p id="progressMessage" class="modal-subtext">Initializing merge engine...</p>
+          
+          <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar-fill" style="width: 10%"></div>
+          </div>
+          <span id="progressPercent" class="progress-percent-label">10%</span>
+        </div>
+      </div>
+
+      <!-- Result Success & Download Modal -->
+      <div id="resultModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <div class="modal-card modal-card-lg">
+          <div class="success-icon-badge">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FAF7EE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+
+          <h3 id="resultTitle" class="modal-heading">Documents Merged Successfully!</h3>
+          <p class="modal-subtext">Your new PDF document is ready and was compiled 100% locally in your browser.</p>
+
+          <div class="result-stats-card">
+            <div class="stat-item">
+              <span class="stat-label">File Name</span>
+              <span id="resultFilename" class="stat-value font-mono">Merged_Document.pdf</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Pages</span>
+              <span id="resultPageCount" class="stat-value">0 Pages</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">File Size</span>
+              <span id="resultFileSize" class="stat-value">0 KB</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Privacy Guarantee</span>
+              <span class="stat-value stat-privacy">✓ Never Uploaded</span>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button id="btnDownloadResult" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Download PDF</span>
+            </button>
+            <button id="btnPreviewResult" class="btn btn-secondary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>Preview in Tab</span>
+            </button>
+            <button id="btnShareResult" class="btn btn-secondary btn-lg hidden">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              <span>Share</span>
+            </button>
+          </div>
+
+          <button id="btnCloseResult" class="modal-close-btn" aria-label="Close dialog">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Toast Container -->
+      <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+      <!-- App Footer with Identity Mark -->
+      <footer class="app-footer">
+        <div class="container footer-inner">
+          <div class="footer-identity">
+            <span class="identity-badge">CREATOR</span>
+            <span class="identity-text">Designed &amp; Developed by <strong class="identity-name">Adabala Venkata Thrinadh</strong></span>
+          </div>
+          <div class="footer-meta">
+            <span>DocuMerge Studio &bull; 100% Offline PWA &bull; Air-Gapped Privacy</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Main Module Script -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
