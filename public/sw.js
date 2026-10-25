@@ -1,18 +1,19 @@
-const CACHE_NAME = 'documerge-cache-v1';
+const CACHE_NAME = 'documerge-cache-v2';
 const PRECACHE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/icon.svg',
-  '/icon-192.png',
-  '/icon-512.png'
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './icon.svg',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Install: precache core shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS);
+      const urlsToCache = PRECACHE_URLS.map(rel => new URL(rel, self.location.href).href);
+      return cache.addAll(urlsToCache);
     }).then(() => self.skipWaiting())
   );
 });

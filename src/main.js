@@ -104,8 +104,9 @@ function initPwa() {
   // Register Service Worker for offline capability
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
+      const swUrl = new URL('sw.js', window.location.href).href;
       navigator.serviceWorker
-        .register('/sw.js')
+        .register(swUrl)
         .then((reg) => {
           console.log('DocuMerge ServiceWorker registered successfully:', reg.scope);
         })
